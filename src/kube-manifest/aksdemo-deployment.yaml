@@ -1,0 +1,26 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: aksdemo-app2
+  labels:
+    app: aksdemo-app2
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: aksdemo-app2
+  template:
+    metadata:
+      labels:
+        app: aksdemo-app2
+    spec:
+      initContainers:
+        - name: init-db
+          image: busybox:1.31
+          command: ['sh', '-c', 'echo -e "Checking for the availability of MySQL Server deployment"; while ! nc -z mysql 3306; do sleep 1; printf "-"; done; echo -e "  >> MySQL DB Server has started";']
+      containers:
+        - name: aksdemo-app2
+          image: aksdemoacr1.azurecr.io/samples/aksdemo2
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 8080
