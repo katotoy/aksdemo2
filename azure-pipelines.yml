@@ -33,7 +33,10 @@ stages:
     - task: Docker@2
       displayName: Build an image
       inputs:
-        command: build
+        command: buildAndPush
         dockerfile: '$(Build.SourcesDirectory)/Dockerfile'
+        repository: $(imageRepository)
+        containerRegistry: $(dockerRegistryServiceConnection)
         tags: |
           $(tag)
+          
