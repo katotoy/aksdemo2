@@ -14,13 +14,15 @@ spec:
       labels:
         app: aksdemo-app2
     spec:
-      initContainers:
-        - name: init-db
-          image: busybox:1.31
-          command: ['sh', '-c', 'echo -e "Checking for the availability of MySQL Server deployment"; while ! nc -z mysql 3306; do sleep 1; printf "-"; done; echo -e "  >> MySQL DB Server has started";']
+      #initContainers:
+      #  - name: init-db
+      #    image: busybox:1.31
+      #    command: ['sh', '-c', 'echo -e "Checking for the availability of MySQL Server deployment"; while ! nc -z mysql 3306; do sleep 1; printf "-"; done; echo -e "  >> MySQL DB Server has started";']
       containers:
         - name: aksdemo-app2
-          image: aksdemoacr1.azurecr.io/samples/aksdemo2
+          image: aksdemoacr1.azurecr.io/app2/acr-app2:v1
           imagePullPolicy: Always
           ports:
             - containerPort: 8080
+      imagePullSecrets:
+        - name: acrdemo2ss-secret
