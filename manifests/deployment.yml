@@ -1,0 +1,19 @@
+apiVersion : apps/v1
+kind: Deployment
+metadata:
+  name: katotoyaksdemo 
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: katotoyaksdemo
+  template:
+    metadata:
+      labels:
+        app: katotoyaksdemo 
+    spec:
+      containers:
+        - name: katotoyaksdemo 
+          image: aksdemoacr1.azurecr.io/katotoyaksdemo
+          ports:
+          - containerPort: 8080
