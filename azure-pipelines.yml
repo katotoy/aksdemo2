@@ -6,8 +6,20 @@
 trigger:
 - master
 
+resources:
+- repo: self
+
+variables:
+  # Container registry service connection established during pipeline creation
+  dockerRegistryServiceConnection: '3477bcdf-9a02-4cd3-bbba-66ecd4c41007'
+  imageRepository: 'custom03appdemo'
+  containerRegistry: 'aksdemoacr1.azurecr.io'
+  dockerfilePath: '$(Build.SourcesDirectory)/Dockerfile'
+  tag: '$(Build.BuildId)'
+  
 pool:
   vmImage: ubuntu-latest
+
 
 steps:
 - script: echo Hello, world!
